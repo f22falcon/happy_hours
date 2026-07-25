@@ -1,7 +1,8 @@
 #pragma once
-# include <stdio.h>
+# include <stdint.h>
 
-#define MEMORY_SIZE = (1024*1024) //1 MB
+
+#define MEMORY_SIZE (1024*1024) //1 MB
 extern uint8_t memory[MEMORY_SIZE];
 
 void memory_init(void);
