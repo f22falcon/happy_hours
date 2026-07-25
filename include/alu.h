@@ -30,6 +30,8 @@ uint16_t alu_xor16(CPU8088 *cpu ,uint16_t a ,uint16_t b);
 //Helper function to evaluate sign flags and zero flags
 
 void alu_update_sz_flags8(CPU8088 *cpu,uint8_t result);
+void alu_update_sz_flags16(CPU8088 *cpu,uint16_t result);
+
 
 
 
