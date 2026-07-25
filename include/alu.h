@@ -6,10 +6,10 @@
 //Flags helper mask definations for 8088Flags register 
 # define FLAG_CF (1<<0) //Carry Flag
 # define FLAG_PF (1<<2) //Parity Flag
-# define FLAG_AF (1<<4) //Auciliary Carry Flag
-# define FLAG_PF (1<<6) //Zero Flag
-# define FLAG_CF (1<<7) //Sign  Flag
-# define FLAG_PF (1<<) //Overflow Flag
+# define FLAG_AF (1<<4) //Auxilliary Carry Flag
+# define FLAG_ZF (1<<6) //Zero Flag
+# define FLAG_SF (1<<7) //Sign  Flag
+# define FLAG_OF (1<<11) //Overflow Flag
 
 //Alu operation (8-bit and 16-bit)
 uint8_t alu_add8(CPU8088 *cpu ,uint8_t a ,uint8_t b);
