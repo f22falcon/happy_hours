@@ -12,25 +12,25 @@
 # define FLAG_OF (1<<11) //Overflow Flag
 
 //Alu operation (8-bit and 16-bit)
-uint8_t alu_add8(CPU8088 *cpu ,uint8_t a ,uint8_t b);
-uint16_t alu_add16(CPU8088 *cpu ,uint16_t a ,uint16_t b);
+uint8_t alu_add8(CPU *cpu ,uint8_t a ,uint8_t b);
+uint16_t alu_add16(CPU *cpu ,uint16_t a ,uint16_t b);
 
-uint8_t alu_sub8(CPU8088 *cpu ,uint8_t a ,uint8_t b);
-uint16_t alu_sub16(CPU8088 *cpu ,uint16_t a ,uint16_t b);
+uint8_t alu_sub8(CPU *cpu ,uint8_t a ,uint8_t b);
+uint16_t alu_sub16(CPU *cpu ,uint16_t a ,uint16_t b);
 
-uint8_t alu_and8(CPU8088 *cpu ,uint8_t a ,uint8_t b);
-uint16_t alu_and16(CPU8088 *cpu ,uint16_t a ,uint16_t b);
+uint8_t alu_and8(CPU *cpu ,uint8_t a ,uint8_t b);
+uint16_t alu_and16(CPU *cpu ,uint16_t a ,uint16_t b);
 
-uint8_t alu_or8(CPU8088 *cpu ,uint8_t a ,uint8_t b);
-uint16_t alu_or16(CPU8088 *cpu ,uint16_t a ,uint16_t b);
+uint8_t alu_or8(CPU *cpu ,uint8_t a ,uint8_t b);
+uint16_t alu_or16(CPU *cpu ,uint16_t a ,uint16_t b);
 
-uint8_t alu_xor8(CPU8088 *cpu ,uint8_t a ,uint8_t b);
-uint16_t alu_xor16(CPU8088 *cpu ,uint16_t a ,uint16_t b);
+uint8_t alu_xor8(CPU *cpu ,uint8_t a ,uint8_t b);
+uint16_t alu_xor16(CPU *cpu ,uint16_t a ,uint16_t b);
 
 //Helper function to evaluate sign flags and zero flags
 
-void alu_update_sz_flags8(CPU8088 *cpu,uint8_t result);
-void alu_update_sz_flags16(CPU8088 *cpu,uint16_t result);
+void alu_update_sz_flags8(CPU *cpu,uint8_t result);
+void alu_update_sz_flags16(CPU *cpu,uint16_t result);
 
 
 

@@ -9,7 +9,9 @@ src/8088_Processor/alu.c \
 src/8088_Processor/control.c \
 src/8088_Processor/interrupt.c \
 src/memory/memory.c \
-src/floppy/floppy.c
+src/floppy/floppy.c  \
+Tests/memory_test.c  \
+Tests/Biu_test.c 
 
 #Name of the Output executable
 TARGET=happy_hours
