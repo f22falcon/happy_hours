@@ -4,7 +4,7 @@
 #include "cpu_struct.h"
 #include "Biu.h"
 
-int main(void)
+void Biu_test(void)
 {
     CPU cpu;
 

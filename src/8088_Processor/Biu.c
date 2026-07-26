@@ -17,11 +17,11 @@ void biu_init(CPU *cpu)
 }
 
 uint8_t biu_fetch8(CPU *cpu){
-    uint32_t Physical_address;
-    uint32_t instruction;
+    uint32_t physical_address;
+    uint8_t instruction;
 
-    Physical_address =Physical_address(cpu->biu.cs ,cpu->biu.ip);
-    instruction = memory_read8(Physical_address);
+    physical_address =Physical_address(cpu->biu.cs ,cpu->biu.ip);
+    instruction = memory_read8(physical_address);
     cpu->biu.ip++;
     return instruction;
 
