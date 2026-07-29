@@ -1,4 +1,5 @@
-#pragma once 
+#ifndef ALU_H
+#define ALU_H
 #include <stdint.h>
 #include <stdbool.h>
 #include "cpu_struct.h"
@@ -32,7 +33,7 @@ uint16_t alu_xor16(CPU *cpu ,uint16_t a ,uint16_t b);
 void alu_update_sz_flags8(CPU *cpu,uint8_t result);
 void alu_update_sz_flags16(CPU *cpu,uint16_t result);
 
-
+#endif
 
 
 

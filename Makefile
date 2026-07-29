@@ -8,10 +8,14 @@ src/8088_Processor/cpu_struct.c \
 src/8088_Processor/alu.c \
 src/8088_Processor/control.c \
 src/8088_Processor/interrupt.c \
+src/8088_Processor/instructions.c \
+src/8088_Processor/opcode_table.c \
+src/8088_Processor/Decoder.c \
 src/8088_Processor/Biu.c \
 src/memory/memory.c \
 src/floppy/floppy.c  \
 Tests/memory_test.c  \
+Tests/Decoder_test.c  \
 Tests/Biu_test.c 
 
 #Name of the Output executable
