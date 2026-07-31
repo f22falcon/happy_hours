@@ -33,5 +33,5 @@ void memory_test(void){
     //Physical address claculation check
     uint32_t addr =Physical_address(0x1234,0x5678);
     printf("\nPhysical Address =  0x%05X\n",addr);
-    printf("\n Memory module test completed.\n");
+    printf("Memory module test completed.\n");
 }

@@ -55,6 +55,7 @@ typedef struct{
 typedef struct {
     EU eu;
     BIU biu;
+    bool halted;
 }CPU;
 
 /*---------------------------------------------------

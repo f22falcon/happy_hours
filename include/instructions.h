@@ -1,7 +1,7 @@
 #ifndef INSTRUCTIONS_H
 #define INSTRUCTIONS_H
 
-#include "cpu.h"
+#include "cpu_struct.h"
 
 void op_mov_al_imm8(CPU *cpu);
 void op_mov_bl_imm8(CPU *cpu);

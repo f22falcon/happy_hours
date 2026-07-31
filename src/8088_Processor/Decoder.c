@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include "decoder.h"
+#include "Decoder.h"
 #include  "opcode_table.h"
-#include  "biu.h"
+#include  "Biu.h"
 
 
 
@@ -14,7 +14,7 @@ void decoder_execute(CPU *cpu){
     }
     
     else{
-        printf("Unknown opcode %02X\n",opcode)
+        printf("Unknown opcode %02X\n",opcode);
         cpu->halted=true;
     }
 }

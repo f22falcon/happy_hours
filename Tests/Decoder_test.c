@@ -1,18 +1,18 @@
 #include <stdio.h>
 
-#include "decoder_test.h"
+#include "Decoder_test.h"
 
-#include "cpu.h"
+#include "cpu_struct.h"
 #include "memory.h"
-#include "decoder.h"
+#include "Decoder.h"
 #include "opcode_table.h"
 
 void decoder_test(void)
 {
     CPU cpu;
-
+    
     cpu_init(&cpu);
-
+ 
     opcode_table_init();
 
     /* Program starts at physical address 0 */
@@ -37,6 +37,8 @@ void decoder_test(void)
 
     memory_write8(0x0006, 0xF4);
 
+    printf("\n=== Decoder Test === \n");
+    
     while(!cpu.halted)
     {
         decoder_execute(&cpu);

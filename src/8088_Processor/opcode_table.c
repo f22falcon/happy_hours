@@ -1,6 +1,7 @@
 #include  "opcode_table.h"
 #include   "instructions.h"
 
+OpcodeHandler opcode_table[256];
 void opcode_table_init(void)
 {
    /*MOV AL,imm8*/
