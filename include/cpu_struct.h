@@ -46,8 +46,10 @@ typedef struct{
     uint16_t di;
     /*FLAGS*/
     uint16_t flags;
+    /*Instruction Register*/
+    uint8_t IR;
 
-} EU;
+}EU;
 
 /*------------------------------------------------
            CPU

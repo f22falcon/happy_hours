@@ -21,10 +21,14 @@ void Biu_test(void)
     memory_write8(0x10001, 0x34);
     memory_write8(0x10002, 0x12);
     memory_write8(0x10003, 0x90);
+    memory_write8(0x10004, 0x90);
+    memory_write8(0x10005, 0x40);
+    
 
     printf("===== BIU TEST =====\n\n");
 
     uint8_t opcode;
+    uint16_t op;
 
     opcode = biu_fetch8(&cpu);
     printf("Fetched = %02X\tIP = %04X\n", opcode, cpu.biu.ip);
@@ -37,6 +41,11 @@ void Biu_test(void)
 
     opcode = biu_fetch8(&cpu);
     printf("Fetched = %02X\tIP = %04X\n", opcode, cpu.biu.ip);
+    
+    op = biu_fetch16(&cpu);
+    printf("Fetched = %04X\tIP = %04X\n", op, cpu.biu.ip);
+    
+    
 
     
 }

@@ -6,15 +6,15 @@
 
 
 void decoder_execute(CPU *cpu){
-    uint8_t opcode = biu_fetch8(cpu);
+    cpu->eu.IR = biu_fetch8(cpu);
     /*Lookup handler*/
-    OpcodeHandler handler = opcode_table[opcode];
+    OpcodeHandler handler = opcode_table[cpu->eu.IR];
     if(handler !=NULL){
         handler(cpu);
     }
     
     else{
-        printf("Unknown opcode %02X\n",opcode);
+        printf("Unknown opcode %02X\n",cpu->eu.IR);
         cpu->halted=true;
     }
 }

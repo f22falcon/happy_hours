@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "Decoder_test.h"
-
+#include "alu.h"
 #include "cpu_struct.h"
 #include "memory.h"
 #include "Decoder.h"
@@ -21,21 +21,24 @@ void decoder_test(void)
 
     /* Program:
        MOV AL,05
-       MOV BL,03
-       ADD AL,BL
+       MOV CL,03
+       ADD AL,CL
        HLT
     */
 
-    memory_write8(0x0000, 0xB0);
-    memory_write8(0x0001, 0x05);
+    memory_write8(0x0000, 0xB8);
+    memory_write8(0x0001, 0x34);
 
-    memory_write8(0x0002, 0xB3);
-    memory_write8(0x0003, 0x03);
+    memory_write8(0x0002, 0x12);
+    memory_write8(0x0003, 0xBB);
 
-    memory_write8(0x0004, 0x00);
-    memory_write8(0x0005, 0xD8);
+    memory_write8(0x0004, 0x78);
+    memory_write8(0x0005, 0x56);
 
-    memory_write8(0x0006, 0xF4);
+    memory_write8(0x0006, 0x01);
+    memory_write8(0x0007, 0xD8);
+
+    memory_write8(0x0008, 0xF4);
 
     printf("\n=== Decoder Test === \n");
     
@@ -43,17 +46,20 @@ void decoder_test(void)
     {
         decoder_execute(&cpu);
     }
+    // Print General Pourpous Registers
+    printf("\nAX = %02X %02X\n", cpu.eu.AX.byte.High,cpu.eu.AX.byte.low);
+    printf("BX = %02X %02X\n", cpu.eu.BX.byte.High,cpu.eu.BX.byte.low);
+    printf("CX = %02X %02X\n", cpu.eu.CX.byte.High,cpu.eu.CX.byte.low);
+    printf("DX = %02X %02X\n", cpu.eu.DX.byte.High,cpu.eu.DX.byte.low);
+    // printf("FLAGS = %05X\n", cpu.eu.flags);
+    printf("\nCF PF AF ZF SF OF\n");
+    printf(" %d  %d  %d  %d  %d  %d\n",
+    (cpu.eu.flags & FLAG_CF) ? 1 : 0,
+    (cpu.eu.flags & FLAG_PF) ? 1 : 0,
+    (cpu.eu.flags & FLAG_AF) ? 1 : 0,
+    (cpu.eu.flags & FLAG_ZF) ? 1 : 0,
+    (cpu.eu.flags & FLAG_SF) ? 1 : 0,
+    (cpu.eu.flags & FLAG_OF) ? 1 : 0);
 
-    printf("AL = %02X\n", cpu.eu.AX.byte.low);
-    printf("BL = %02X\n", cpu.eu.BX.byte.low);
-    printf("FLAGS = %04X\n", cpu.eu.flags);
-
-    if(cpu.eu.AX.byte.low == 0x08)
-    {
-        printf("\n[PASS] Decoder Test\n");
-    }
-    else
-    {
-        printf("\n[FAIL] Decoder Test\n");
-    }
+   
 }

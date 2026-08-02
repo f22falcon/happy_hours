@@ -22,7 +22,10 @@ uint8_t alu_add8(CPU *cpu,uint8_t a, uint8_t b){
     uint8_t result = (uint8_t)temp;
     cpu->eu.flags &=~(FLAG_CF|
                        FLAG_AF|
-                       FLAG_OF);                      
+                       FLAG_PF|
+                       FLAG_OF|
+                       FLAG_ZF|
+                       FLAG_SF);                      
     /*Carry*/
     if(temp >0xFF)
        (cpu->eu.flags |= FLAG_CF);
@@ -32,8 +35,47 @@ uint8_t alu_add8(CPU *cpu,uint8_t a, uint8_t b){
     /*Overflow*/
     if((~(a^b) & (a^result) & 0x80) )
          cpu->eu.flags|= FLAG_OF;
+    /*Parity flag*/    
     if (even_parity(result))
         cpu->eu.flags |= FLAG_PF;
+    /*Zero flag*/
+    if (result == 0)
+        cpu->eu.flags |=FLAG_ZF;
+    /*Sign flag*/
+    if (result & 0x80)
+        cpu->eu.flags |=FLAG_SF;
+    
+    // alu_update_sz_flags8(cpu, result);
+    return result;
+}
+
+uint16_t alu_add16(CPU *cpu,uint16_t a, uint16_t b){
+    uint32_t temp = (uint32_t)a +(uint32_t)b;
+    uint16_t result = (uint16_t)temp;
+    cpu->eu.flags &=~(FLAG_CF|
+                       FLAG_AF|
+                       FLAG_PF|
+                       FLAG_OF|
+                       FLAG_ZF|
+                       FLAG_SF);                      
+    /*Carry*/
+    if(temp >0xFFFF)
+       (cpu->eu.flags |= FLAG_CF);
+    /*Auxiliary Carry*/
+    if(((a & 0x000F)+(b & 0x000F))>0xFF)
+        (cpu->eu.flags |= FLAG_AF);
+    /*Overflow*/
+    if((~(a^b) & (a^result) & 0x8000) )
+         cpu->eu.flags|= FLAG_OF;
+    /*Parity flag*/    
+    if (even_parity(result))
+        cpu->eu.flags |= FLAG_PF;
+    /*Zero flag*/
+    if (result == 0)
+        cpu->eu.flags |=FLAG_ZF;
+    /*Sign flag*/
+    if (result & 0x8000)
+        cpu->eu.flags |=FLAG_SF;
     
     // alu_update_sz_flags8(cpu, result);
     return result;
