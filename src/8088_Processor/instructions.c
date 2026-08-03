@@ -79,6 +79,39 @@ void op_add_rm8_r8(CPU *cpu){
           
     }
 }
+void op_sub_rm8_r8(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint8_t *dst =eu_get_reg8(&cpu->eu,m.rm);
+        uint8_t *src =eu_get_reg8(&cpu->eu,m.reg);
+        *dst =
+          alu_sub8(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+void op_cmp_rm8_r8(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint8_t *dst =eu_get_reg8(&cpu->eu,m.rm);
+        uint8_t *src =eu_get_reg8(&cpu->eu,m.reg);
+        alu_sub8(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
 
 void op_add_rm16_r16(CPU *cpu){
     uint8_t modrm =biu_fetch8(cpu);
@@ -97,7 +130,44 @@ void op_add_rm16_r16(CPU *cpu){
           
     }
 }
+void op_cmp_rm16_r16(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint16_t *dst =eu_get_reg16(&cpu->eu,m.rm);
+        uint16_t *src =eu_get_reg16(&cpu->eu,m.reg);
+        alu_sub16(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+void op_sub_rm16_r16(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint16_t *dst =eu_get_reg16(&cpu->eu,m.rm);
+        uint16_t *src =eu_get_reg16(&cpu->eu,m.reg);
+        *dst =
+          alu_sub16(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+void op_jmp_short(CPU *cpu){
+    int8_t disp =(int8_t)biu_fetch8(cpu);
+    cpu->biu.ip+=disp;
 
+}
 
 
 void op_hlt(CPU *cpu){

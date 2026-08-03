@@ -26,19 +26,19 @@ void decoder_test(void)
        HLT
     */
 
-    memory_write8(0x0000, 0xB8);
-    memory_write8(0x0001, 0x34);
+    memory_write8(0x0000, 0xEB);
+    memory_write8(0x0001, 0x02);
 
-    memory_write8(0x0002, 0x12);
-    memory_write8(0x0003, 0xBB);
+    memory_write8(0x0002, 0xB0);
+    memory_write8(0x0003, 0x01);
 
-    memory_write8(0x0004, 0x78);
-    memory_write8(0x0005, 0x56);
+    memory_write8(0x0004, 0xB3);
+    memory_write8(0x0005, 0x02);
 
-    memory_write8(0x0006, 0x01);
-    memory_write8(0x0007, 0xD8);
+    // memory_write8(0x0006, 0x29);
+    // memory_write8(0x0007, 0xD8);
 
-    memory_write8(0x0008, 0xF4);
+    memory_write8(0x0006, 0xF4);
 
     printf("\n=== Decoder Test === \n");
     

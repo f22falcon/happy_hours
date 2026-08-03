@@ -55,8 +55,17 @@ void opcode_table_init(void)
 
    /*ADD r/m8 ,r8*/
    opcode_table[0x00]=op_add_rm8_r8;
+   opcode_table[0x28]=op_sub_rm8_r8;
    /*ADD r/m16 ,r16*/
    opcode_table[0x01]=op_add_rm16_r16;
+   opcode_table[0x29]=op_sub_rm16_r16;
+
+   opcode_table[0x38]=op_cmp_rm8_r8;
+   opcode_table[0x39]=op_cmp_rm16_r16;
+
+   opcode_table[0xEB]=op_jmp_short;
+   
+
    
 
    /*HLT*/
