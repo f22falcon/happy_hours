@@ -26,32 +26,49 @@ void decoder_test(void)
        HLT
     */
 
-    memory_write8(0x0000, 0xEB);
-    memory_write8(0x0001, 0x02);
+    memory_write8(0x0000, 0xB8);
+    memory_write8(0x0001, 0x00);
 
-    memory_write8(0x0002, 0xB0);
-    memory_write8(0x0003, 0x01);
+    memory_write8(0x0002, 0x00);
+    memory_write8(0x0003, 0xBB);
 
-    memory_write8(0x0004, 0xB3);
-    memory_write8(0x0005, 0x02);
+    memory_write8(0x0004, 0x05);
+    memory_write8(0x0005, 0x00);
 
-    // memory_write8(0x0006, 0x29);
-    // memory_write8(0x0007, 0xD8);
+    memory_write8(0x0006, 0xB9);
+    memory_write8(0x0007, 0x04);
+    memory_write8(0x0008, 0x00);
+    memory_write8(0x0009, 0x01);
+    memory_write8(0x000A, 0xD8);
+    memory_write8(0x000B, 0x49);
+    memory_write8(0x000C, 0x75);
+    memory_write8(0x000D, 0xFB);
+    memory_write8(0x000E, 0xF4);
+    // memory_write8(0x000F, 0x01);
+    // memory_write8(0x0010, 0xD8);
+    // memory_write8(0x0011, 0x29);
+    // memory_write8(0x0012, 0xD1);
+    // memory_write8(0x0013, 0x39);
+    // memory_write8(0x0014, 0xF1);
+    // memory_write8(0x0015, 0x75);
+    // memory_write8(0x0016, 0xF8);
 
-    memory_write8(0x0006, 0xF4);
+    // memory_write8(0x0017, 0xF4);
 
-    printf("\n=== Decoder Test === \n");
+    printf("\n==================== \n");
     
     while(!cpu.halted)
     {
         decoder_execute(&cpu);
+        
     }
     // Print General Pourpous Registers
-    printf("\nAX = %02X %02X\n", cpu.eu.AX.byte.High,cpu.eu.AX.byte.low);
-    printf("BX = %02X %02X\n", cpu.eu.BX.byte.High,cpu.eu.BX.byte.low);
-    printf("CX = %02X %02X\n", cpu.eu.CX.byte.High,cpu.eu.CX.byte.low);
-    printf("DX = %02X %02X\n", cpu.eu.DX.byte.High,cpu.eu.DX.byte.low);
-    // printf("FLAGS = %05X\n", cpu.eu.flags);
+    printf("\nAX = %02X%02Xh\n", cpu.eu.AX.byte.High,cpu.eu.AX.byte.low);
+    printf("BX = %02X%02Xh\n", cpu.eu.BX.byte.High,cpu.eu.BX.byte.low);
+    printf("CX = %02X%02Xh\n", cpu.eu.CX.byte.High,cpu.eu.CX.byte.low);
+    printf("DX = %02X%02Xh\n", cpu.eu.DX.byte.High,cpu.eu.DX.byte.low);
+    printf("SI = %04Xh\n",cpu.eu.si);
+   
     printf("\nCF PF AF ZF SF OF\n");
     printf(" %d  %d  %d  %d  %d  %d\n",
     (cpu.eu.flags & FLAG_CF) ? 1 : 0,

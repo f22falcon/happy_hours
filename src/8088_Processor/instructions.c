@@ -163,9 +163,155 @@ void op_sub_rm16_r16(CPU *cpu){
           
     }
 }
+
+
+void op_and_rm8_r8(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint8_t *dst =eu_get_reg8(&cpu->eu,m.rm);
+        uint8_t *src =eu_get_reg8(&cpu->eu,m.reg);
+        *dst=
+        alu_and8(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+
+void op_and_rm16_r16(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint16_t *dst =eu_get_reg16(&cpu->eu,m.rm);
+        uint16_t *src =eu_get_reg16(&cpu->eu,m.reg);
+        *dst =
+          alu_and16(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+void op_or_rm8_r8(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint16_t *dst =eu_get_reg16(&cpu->eu,m.rm);
+        uint16_t *src =eu_get_reg16(&cpu->eu,m.reg);
+        *dst =
+          alu_or8(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+void op_or_rm16_r16(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint16_t *dst =eu_get_reg16(&cpu->eu,m.rm);
+        uint16_t *src =eu_get_reg16(&cpu->eu,m.reg);
+        *dst =
+          alu_or16(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+void op_xor_rm8_r8(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint16_t *dst =eu_get_reg16(&cpu->eu,m.rm);
+        uint16_t *src =eu_get_reg16(&cpu->eu,m.reg);
+        *dst =
+          alu_xor8(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+void op_xor_rm16_r16(CPU *cpu){
+    uint8_t modrm =biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    /*
+    00 D8 = ADD AL,BL*/
+    if (m.mod ==3){
+        uint16_t *dst =eu_get_reg16(&cpu->eu,m.rm);
+        uint16_t *src =eu_get_reg16(&cpu->eu,m.reg);
+        *dst =
+          alu_xor16(
+            cpu,
+            *dst,
+            *src
+          );
+          
+    }
+}
+
+void op_inc_r16(CPU *cpu){
+    uint8_t reg = cpu->eu.IR-0x40;
+    uint16_t *dst = eu_get_reg16(&cpu->eu,reg);
+    *dst=alu_inc16(cpu,*dst);
+
+}
+
+void op_dec_r16(CPU *cpu){
+    uint8_t reg = cpu->eu.IR-0x48;
+    uint16_t *dst = eu_get_reg16(&cpu->eu,reg);
+    *dst=alu_dec16(cpu,*dst);
+
+}
+
+
+
 void op_jmp_short(CPU *cpu){
     int8_t disp =(int8_t)biu_fetch8(cpu);
     cpu->biu.ip+=disp;
+
+}
+void op_jc_short(CPU *cpu){
+    int8_t disp =(int8_t)biu_fetch8(cpu);
+    if (cpu->eu.flags & FLAG_CF)
+      cpu->biu.ip+=disp;
+
+}
+void op_jnc_short(CPU *cpu){
+    int8_t disp =(int8_t)biu_fetch8(cpu);
+    if(!(cpu->eu.flags  & FLAG_CF))
+      cpu->biu.ip+=disp;
+
+}
+void op_jz_short(CPU *cpu){
+    int8_t disp =(int8_t)biu_fetch8(cpu);
+    if((cpu->eu.flags  & FLAG_ZF))
+      cpu->biu.ip+=disp;
+
+}
+void op_jnz_short(CPU *cpu){
+    int8_t disp =(int8_t)biu_fetch8(cpu);
+    if(!(cpu->eu.flags  & FLAG_ZF))
+      cpu->biu.ip+=disp;
 
 }
 

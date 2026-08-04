@@ -55,18 +55,56 @@ void opcode_table_init(void)
 
    /*ADD r/m8 ,r8*/
    opcode_table[0x00]=op_add_rm8_r8;
+   /*SUB r/m8,r8*/
    opcode_table[0x28]=op_sub_rm8_r8;
    /*ADD r/m16 ,r16*/
    opcode_table[0x01]=op_add_rm16_r16;
+   /*SUB r/m16 ,r16*/
    opcode_table[0x29]=op_sub_rm16_r16;
-
+   /*COMPARE r/m8 ,r8*/
    opcode_table[0x38]=op_cmp_rm8_r8;
+   /*COMPARW r/m16 ,r16*/
    opcode_table[0x39]=op_cmp_rm16_r16;
-
+   
+   /*JMP*/
    opcode_table[0xEB]=op_jmp_short;
+   /*JZ*/
+   opcode_table[0x74]=op_jz_short;
+   /*JNZ*/
+   opcode_table[0x75]=op_jnz_short;
    
+   /*JC*/
+   opcode_table[0x72]=op_jc_short;
+   /*JNC*/
+   opcode_table[0x73]=op_jnc_short;
 
-   
+   opcode_table[0x20]=op_and_rm8_r8;
+   opcode_table[0x21]=op_and_rm16_r16;
+
+   opcode_table[0x08]=op_or_rm8_r8;
+   opcode_table[0x09]=op_or_rm16_r16;
+
+   opcode_table[0x30]=op_xor_rm8_r8;
+   opcode_table[0x31]=op_xor_rm16_r16;
+
+   opcode_table[0x40]=op_inc_r16;
+   opcode_table[0x41]=op_inc_r16;
+   opcode_table[0x42]=op_inc_r16;
+   opcode_table[0x43]=op_inc_r16;
+   opcode_table[0x44]=op_inc_r16;
+   opcode_table[0x45]=op_inc_r16;
+   opcode_table[0x46]=op_inc_r16;
+   opcode_table[0x47]=op_inc_r16;
+
+   opcode_table[0x48]=op_dec_r16;
+   opcode_table[0x49]=op_dec_r16;
+   opcode_table[0x50]=op_dec_r16;
+   opcode_table[0x51]=op_dec_r16;
+   opcode_table[0x52]=op_dec_r16;
+   opcode_table[0x53]=op_dec_r16;
+   opcode_table[0x54]=op_dec_r16;
+   opcode_table[0x55]=op_dec_r16;
+
 
    /*HLT*/
    opcode_table[0xF4] = op_hlt;

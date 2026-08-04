@@ -7,8 +7,8 @@
 
 int main(void){
     printf("8088 Emulator IS Running ....\n");
-    memory_test ();
-    Biu_test ();
+    // memory_test ();
+    // Biu_test ();
     decoder_test();
     return 0;
 }
