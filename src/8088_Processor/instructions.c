@@ -2,6 +2,7 @@
 #include "alu.h"
 #include <stddef.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "cpu_struct.h"
 #include "Biu.h"
 
@@ -16,7 +17,42 @@ static ModRM decode_modrm(uint8_t modrm)
     return m;
 
 }
-
+void op_group_f6(CPU *cpu){
+    uint8_t modrm = biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    switch (m.reg){
+        case 4:
+          op_mul8(cpu,m);
+          break;
+        case 5:
+          op_imul8(cpu,m);
+          break;
+        case 6:
+          op_div8(cpu,m);
+          break;
+        case 7:
+          op_idiv8(cpu,m);
+          break;
+    }
+}
+void op_group_f7(CPU *cpu){
+    uint8_t modrm = biu_fetch8(cpu);
+    ModRM m = decode_modrm(modrm);
+    switch (m.reg){
+        case 4:
+          op_mul16(cpu,m);
+          break;
+        case 5:
+          op_imul16(cpu,m);
+          break;
+        case 6:
+          op_div16(cpu,m);
+          break;
+        case 7:
+          op_idiv16(cpu,m);
+          break;
+    }
+}
 
 static uint8_t *eu_get_reg8(EU *eu,uint8_t reg )
 {
@@ -58,7 +94,6 @@ void op_mov_rl_imm8(CPU *cpu){
     uint8_t reg= cpu->eu.IR - 0xB0;
     uint8_t *dst =eu_get_reg8(&cpu->eu,reg);
     *dst = biu_fetch8(cpu);
-
 }
 
 
@@ -234,6 +269,7 @@ void op_or_rm16_r16(CPU *cpu){
           
     }
 }
+
 void op_xor_rm8_r8(CPU *cpu){
     uint8_t modrm =biu_fetch8(cpu);
     ModRM m = decode_modrm(modrm);
@@ -283,6 +319,73 @@ void op_dec_r16(CPU *cpu){
 
 }
 
+void op_mul8(CPU *cpu,ModRM m){
+    
+    if (m.mod !=3){
+        printf("MUL r/m8 memory  operand not implemented!\n");
+        exit(1);
+    }
+    uint8_t *src= eu_get_reg8(&cpu->eu,m.rm);
+    uint16_t result = alu_mul8(cpu,cpu->eu.AX.byte.low,*src);
+    cpu->eu.AX.reg=result;
+
+}
+void op_imul8(CPU *cpu,ModRM m){
+    (void)cpu;
+    (void)m;
+}
+void op_div8(CPU *cpu,ModRM m){
+    if (m.mod !=3){
+        printf("DIV r/m8 memory  operand not implemented!\n");
+        exit(1);
+    }
+    uint8_t *src =eu_get_reg8(&cpu->eu,m.rm);
+    uint16_t result = alu_div8(cpu,cpu->eu.AX.reg, *src);
+    /*Quotient -> AL*/
+    cpu->eu.AX.byte.low =(uint8_t)(result & 0x00FF);
+    /*Reminder -> AH*/
+    cpu->eu.AX.byte.High =(uint8_t)(result >> 8);
+}
+void op_idiv8(CPU *cpu,ModRM m){
+    (void)cpu;
+    (void)m;
+}
+
+void op_mul16(CPU *cpu ,ModRM m){
+   if (m.mod !=3){
+        printf("MUL r/m8 memory  operand not implemented!\n");
+        exit(1);
+    }
+    uint16_t *src= eu_get_reg16(&cpu->eu,m.rm);
+    uint32_t result = alu_mul16(cpu,cpu->eu.AX.reg,*src);
+    cpu->eu.AX.reg=(uint16_t)result;
+    cpu->eu.DX.reg=(uint16_t)(result >> 16);
+
+}
+void op_imul16(CPU *cpu,ModRM m){
+    (void)cpu;
+    (void)m;
+}
+void op_div16(CPU *cpu,ModRM m){
+    if (m.mod !=3){
+        printf("MUL r/m8 memory  operand not implemented!\n");
+        exit(1);
+    }
+    uint16_t *src = eu_get_reg16(&cpu->eu, m.rm);
+
+    uint32_t dividend =
+        ((uint32_t)cpu->eu.DX.reg << 16) |
+         cpu->eu.AX.reg;
+
+    uint32_t result = alu_div16(cpu, dividend, *src);
+
+    cpu->eu.AX.reg = (uint16_t)(result & 0xFFFF);        // Quotient
+    cpu->eu.DX.reg = (uint16_t)(result >> 16);           // Remainder
+}
+void op_idiv16(CPU *cpu,ModRM m){
+    (void)cpu;
+    (void)m;
+}
 
 
 void op_jmp_short(CPU *cpu){

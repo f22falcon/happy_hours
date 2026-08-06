@@ -1,5 +1,7 @@
 #include "alu.h"
 #include <stdio.h>
+#include <stddef.h>
+#include <stdlib.h>
 
 /*----------------------------------------------------------------------
 --------------------*/
@@ -298,4 +300,98 @@ uint16_t alu_dec16(CPU *cpu,uint16_t value){
     cpu->eu.flags = (cpu->eu.flags & ~FLAG_CF)|old_cf;
     return result;
 
+}
+uint16_t alu_mul8(CPU *cpu,uint8_t multiplicand ,uint8_t multiplier){
+    uint16_t  result=0;
+    uint16_t mcand=multiplicand;
+    for (int i=0;i<8;i++){
+        /*if current multiplier bit is 1,add multiplicand*/
+        if(multiplier & 0x01){
+            result+=mcand;
+        }
+        mcand <<=1;
+        multiplier >>=1;
+    }
+    if (result & 0xFF00){
+        cpu->eu.flags |=(FLAG_CF|FLAG_OF);
+    }
+    else
+        cpu->eu.flags |=~(FLAG_CF|FLAG_OF);
+    /*ZF,SF,PF,AF are undefined on the real 8088*/
+    return result;
+
+}
+uint32_t alu_mul16(CPU *cpu,uint16_t multiplicand ,uint16_t multiplier){
+    uint32_t  result=0;
+    uint32_t mcand=multiplicand;
+    for (int i=0;i<16;i++){
+        /*if current multiplier bit is 1,add multiplicand*/
+        if(multiplier & 0x01){
+            result+=mcand;
+        }
+        mcand <<=1;
+        multiplier >>=1;
+    }
+    if (result & 0xFFFF0000)
+        cpu->eu.flags |=(FLAG_CF|FLAG_OF);
+    else
+        cpu->eu.flags |=~(FLAG_CF|FLAG_OF);
+    /*ZF,SF,PF,AF are undefined on the real 8088*/
+    return result;
+
+}
+
+uint16_t alu_div8(CPU *cpu ,uint16_t dividend ,uint8_t divisor){
+    (void)cpu;
+    if(divisor ==0){
+        printf("Devide by Zero Error!\n");
+        exit(1);
+    }
+    uint16_t  remainder=0;
+    uint32_t temp = dividend;
+    uint8_t quotient;
+    for (int i=0;i<16;i++){
+        /*Shift remainder left and bring in MSB of dividend*/
+        remainder=(remainder << 1)|((temp>>15)&1);
+        /*Shift dividend left (quotient  is built here)*/
+        temp<<=1;
+        if(remainder >= divisor){
+            remainder-=divisor;
+            temp|=1;
+        }
+    quotient = temp & 0XFF ;   
+        
+    }
+    if (temp & 0xFF00){
+        printf("Divide overflow!\n");
+        exit(1);
+    }
+    return ((uint16_t)remainder<<8)|quotient;
+}
+
+uint32_t alu_div16(CPU *cpu ,uint32_t dividend ,uint16_t divisor){
+    (void)cpu;
+    if(divisor ==0){
+        printf("Devide by Zero Error!\n");
+        exit(1);
+    }
+    uint32_t  remainder=0;
+    uint32_t temp = dividend;
+    for (int i=0;i<32;i++){
+        /*Shift remainder left and bring in MSB of dividend*/
+        remainder=(remainder << 1)|((temp>>31)&1);
+        /*Shift dividend left (quotient  is built here)*/
+        temp<<=1;
+        if(remainder >= divisor){
+            remainder-=divisor;
+            temp|=1;
+        }
+      
+        
+    }
+    if (temp & 0xFFFF0000){
+        printf("Divide overflow!\n");
+        exit(1);
+    }
+    return ((remainder<<16)|(temp & 0xFFFF));
 }

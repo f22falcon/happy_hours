@@ -34,6 +34,12 @@ uint16_t alu_not16(uint16_t value);
 uint16_t alu_inc16(CPU *cpu,uint16_t value);
 uint16_t alu_dec16(CPU *cpu,uint16_t value);
 
+uint16_t alu_mul8(CPU *cpu ,uint8_t multiplicand ,uint8_t multiplier);
+uint32_t alu_mul16(CPU *cpu ,uint16_t multiplicand ,uint16_t multiplier);
+
+uint16_t alu_div8(CPU *cpu ,uint16_t dividend ,uint8_t divisor);
+uint32_t alu_div16(CPU *cpu ,uint32_t dividend ,uint16_t divisor);
+
 
 //Helper function to evaluate sign flags and zero flags
 

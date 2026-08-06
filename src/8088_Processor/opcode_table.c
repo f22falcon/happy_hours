@@ -77,16 +77,16 @@ void opcode_table_init(void)
    opcode_table[0x72]=op_jc_short;
    /*JNC*/
    opcode_table[0x73]=op_jnc_short;
-
+   /*AND operation*/
    opcode_table[0x20]=op_and_rm8_r8;
    opcode_table[0x21]=op_and_rm16_r16;
-
+   /*OR operation*/
    opcode_table[0x08]=op_or_rm8_r8;
    opcode_table[0x09]=op_or_rm16_r16;
-
+   /*XOR operation*/
    opcode_table[0x30]=op_xor_rm8_r8;
    opcode_table[0x31]=op_xor_rm16_r16;
-
+   /*INCREMENT*/
    opcode_table[0x40]=op_inc_r16;
    opcode_table[0x41]=op_inc_r16;
    opcode_table[0x42]=op_inc_r16;
@@ -95,16 +95,19 @@ void opcode_table_init(void)
    opcode_table[0x45]=op_inc_r16;
    opcode_table[0x46]=op_inc_r16;
    opcode_table[0x47]=op_inc_r16;
-
+   /*DECREMENT*/
    opcode_table[0x48]=op_dec_r16;
    opcode_table[0x49]=op_dec_r16;
-   opcode_table[0x50]=op_dec_r16;
-   opcode_table[0x51]=op_dec_r16;
-   opcode_table[0x52]=op_dec_r16;
-   opcode_table[0x53]=op_dec_r16;
-   opcode_table[0x54]=op_dec_r16;
-   opcode_table[0x55]=op_dec_r16;
-
+   opcode_table[0x4A]=op_dec_r16;
+   opcode_table[0x4B]=op_dec_r16;
+   opcode_table[0x4C]=op_dec_r16;
+   opcode_table[0x4D]=op_dec_r16;
+   opcode_table[0x4E]=op_dec_r16;
+   opcode_table[0x4F]=op_dec_r16;
+   /*OP_CODE GROUP for multiplication and division (signed & unsigned)*/
+   opcode_table[0xF6]=op_group_f6;
+   opcode_table[0xF7]=op_group_f7;
+   
 
    /*HLT*/
    opcode_table[0xF4] = op_hlt;

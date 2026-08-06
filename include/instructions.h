@@ -33,6 +33,16 @@ void op_xor_rm8_r8(CPU *cpu);
 void op_xor_rm16_r16(CPU *cpu);
 void op_inc_r16(CPU *cpu);
 void op_dec_r16(CPU *cpu);
+void op_group_f6(CPU *cpu);
+void op_group_f7(CPU *cpu);
+void op_mul8(CPU *cpu,ModRM m);
+void op_imul8(CPU *cpu, ModRM m);
+void op_div8(CPU *cpu,ModRM m);
+void op_idiv8(CPU *cpu,ModRM m);
+void op_mul16(CPU *cpu,ModRM m);
+void op_imul16(CPU *cpu,ModRM m);
+void op_div16(CPU *cpu,ModRM m);
+void op_idiv16(CPU *cpu,ModRM m);
 
 
 void op_hlt(CPU *cpu);
