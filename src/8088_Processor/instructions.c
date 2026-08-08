@@ -330,9 +330,19 @@ void op_mul8(CPU *cpu,ModRM m){
     cpu->eu.AX.reg=result;
 
 }
-void op_imul8(CPU *cpu,ModRM m){
-    (void)cpu;
-    (void)m;
+void op_imul8(CPU *cpu, ModRM m)
+{   
+    if (m.mod !=3){
+        printf("DIV r/m8 memory  operand not implemented!\n");
+        exit(1);
+    }
+    int8_t *src = (int8_t *)eu_get_reg8(&cpu->eu, m.rm);
+
+    int16_t result = alu_imul8(cpu,
+                               (int8_t)cpu->eu.AX.byte.low,
+                               *src);
+
+    cpu->eu.AX.reg = (uint16_t)result;
 }
 void op_div8(CPU *cpu,ModRM m){
     if (m.mod !=3){
@@ -346,10 +356,6 @@ void op_div8(CPU *cpu,ModRM m){
     /*Reminder -> AH*/
     cpu->eu.AX.byte.High =(uint8_t)(result >> 8);
 }
-void op_idiv8(CPU *cpu,ModRM m){
-    (void)cpu;
-    (void)m;
-}
 
 void op_mul16(CPU *cpu ,ModRM m){
    if (m.mod !=3){
@@ -362,10 +368,40 @@ void op_mul16(CPU *cpu ,ModRM m){
     cpu->eu.DX.reg=(uint16_t)(result >> 16);
 
 }
-void op_imul16(CPU *cpu,ModRM m){
-    (void)cpu;
-    (void)m;
+void op_imul16(CPU *cpu, ModRM m)
+{   
+    if (m.mod !=3){
+        printf("DIV r/m8 memory  operand not implemented!\n");
+        exit(1);
+    }
+    int16_t *src = (int16_t *)eu_get_reg16(&cpu->eu, m.rm);
+
+    int32_t result = alu_imul16(cpu,
+                                (int16_t)cpu->eu.AX.reg,
+                                *src);
+
+    cpu->eu.AX.reg = (uint16_t)result;
+    cpu->eu.DX.reg = (uint16_t)(result >> 16);
 }
+void op_idiv8(CPU *cpu, ModRM m)
+ {     
+    //    (void)cpu;
+    //    (void)m;
+    if (m.mod !=3){
+        printf("DIV r/m8 memory  operand not implemented!\n");
+        exit(1);
+    }
+    int8_t *src = (int8_t *)eu_get_reg8(&cpu->eu, m.rm);
+
+    int16_t result =
+        alu_idiv8(cpu,
+                  (int16_t)cpu->eu.AX.reg,
+                  *src);
+
+    cpu->eu.AX.byte.low  = (uint8_t)(result & 0xFF);   /* Quotient */
+    cpu->eu.AX.byte.High = (uint8_t)(result >> 8);     /* Remainder */
+ }
+
 void op_div16(CPU *cpu,ModRM m){
     if (m.mod !=3){
         printf("MUL r/m8 memory  operand not implemented!\n");
@@ -382,9 +418,22 @@ void op_div16(CPU *cpu,ModRM m){
     cpu->eu.AX.reg = (uint16_t)(result & 0xFFFF);        // Quotient
     cpu->eu.DX.reg = (uint16_t)(result >> 16);           // Remainder
 }
+
 void op_idiv16(CPU *cpu,ModRM m){
     (void)cpu;
-    (void)m;
+    
+    int16_t *src = (int16_t *)eu_get_reg16(&cpu->eu, m.rm);
+
+    int32_t dividend =
+        ((int32_t)(int16_t)cpu->eu.DX.reg << 16) |
+        cpu->eu.AX.reg;
+
+    int32_t result =
+        alu_idiv16(cpu, dividend, *src);
+
+    cpu->eu.AX.reg = (uint16_t)(result & 0xFFFF);
+    cpu->eu.DX.reg = (uint16_t)((result >> 16) & 0xFFFF);
+
 }
 
 
